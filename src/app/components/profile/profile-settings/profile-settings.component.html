@@ -1,0 +1,66 @@
+<div *ngIf="isUserDataLoading || isLoading" class="loading-overlay"> <div class="loading-dots"> <div></div> <div></div> <div></div> </div>
+  <p class="loading-text">{{ isUserDataLoading ? 'Завантаження налаштувань...' : 'Збереження змін...' }}</p>
+</div>
+
+<div *ngIf="!isUserDataLoading" class="settings-form-container">
+  <div class="settings-header">
+    <h2>Account Settings</h2>
+  </div>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h3 class="form-section-title">Personal Information</h3>
+      <div class="form-field">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" />
+        <small *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="validation-error">
+          <span *ngIf="username?.errors?.['required']">Username is required.</span>
+          <span *ngIf="username?.errors?.['minlength']">Username must be at least 3 characters.</span>
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" />
+        <small *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="validation-error">
+          <span *ngIf="email?.errors?.['required']">Email is required.</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email.</span>
+        </small>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="form-section-title">Change Password (Optional)</h3>
+      <div class="form-field">
+        <label for="currentPassword">Current Password</label>
+        <input type="password" id="currentPassword" formControlName="currentPassword" placeholder="Required to change password" />
+         <small *ngIf="currentPassword?.errors?.['requiredToChange'] && (newPassword?.value || confirmNewPassword?.value)" class="validation-error">
+            Current password is required to set a new one.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" formControlName="newPassword" placeholder="Minimum 6 characters" />
+        <small *ngIf="newPassword?.invalid && (newPassword?.dirty || newPassword?.touched)" class="validation-error">
+          <span *ngIf="newPassword?.errors?.['minlength']">Password must be at least 6 characters.</span>
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input type="password" id="confirmNewPassword" formControlName="confirmNewPassword" />
+        <small *ngIf="confirmNewPassword?.errors?.['mismatch'] && (confirmNewPassword?.dirty || confirmNewPassword?.touched)" class="validation-error">
+          Passwords do not match.
+        </small>
+      </div>
+    </div>
+
+    <div class="submit-button-container">
+      <button type="submit" class="save-btn" [disabled]="settingsForm.pristine || isLoading || settingsForm.invalid">
+        Save Changes
+      </button>
+      <p *ngIf="settingsForm.pristine && !isLoading" class="info-message">No changes to save.</p>
+    </div>
+  </form>
+</div>

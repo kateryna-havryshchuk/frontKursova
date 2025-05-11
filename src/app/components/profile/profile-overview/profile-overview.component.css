@@ -1,0 +1,86 @@
+/* src/app/components/profile/overview/profile-overview.component.css */
+:host {
+  display: block;
+  padding: 0px; /* Внутрішній відступ для контенту вкладки */
+  background-color: #fff; /* Фон самої вкладки */
+  border-radius: 0 0 10px 10px; /* Якщо .profile-content не має свого padding/bg */
+}
+
+.overview-header {
+  margin-bottom: 30px;
+}
+
+.overview-header h2 { /* Заголовок вкладки "Overview" */
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.overview-header p.welcome-text { /* Текст привітання */
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.overview-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 25px; /* Відстань між картками статистики */
+}
+
+.stat-card {
+  background-color: #f8f9fa; /* Світлий фон для карток */
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #e7e7e7;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card-icon { /* Опціональна іконка для картки */
+  font-size: 28px;
+  color: #db9761; /* Акцентний колір */
+  margin-bottom: 15px;
+  /* наприклад, <i class="fas fa-book stat-card-icon"></i> */
+}
+
+.stat-card-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #db9761; /* Акцентний колір */
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.stat-card-label {
+  font-size: 15px;
+  color: #555;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Стиль для порожнього стану (якщо немає статистики) */
+.no-stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 200px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+.no-stats-container p {
+  font-size: 16px;
+  color: #777;
+}

@@ -1,0 +1,486 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 15px 15px;
+  animation: slideDown 0.5s ease-in-out;
+}
+
+
+
+/* Можна додати в profile.component.css або styles.css */
+
+/* Стиль для індикатора завантаження */
+.loading-spinner-container { /* Обгортка для центрування */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 150px; /* Щоб контейнер не стрибав при завантаженні */
+}
+
+.loading-spinner {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #db9761; /* Main accent color */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px; /* Відступ, якщо є текст під спінером */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner-container p,
+.empty-state-container p {
+  font-size: 16px;
+  color: #777;
+  text-align: center;
+}
+
+/* Стиль для повідомлень про порожній стан (немає замовлень, товарів у вішлісті тощо) */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 150px;
+  text-align: center;
+  background-color: #f8f9fa; /* Легкий фон для виділення */
+  border-radius: 8px;
+  border: 1px dashed #e0e0e0; /* Пунктирна рамка */
+}
+
+.empty-state-container .empty-state-icon { /* Для іконки, якщо будеш додавати */
+  font-size: 48px; /* Розмір іконки */
+  color: #cccccc;
+  margin-bottom: 15px;
+}
+
+.empty-state-container h3 {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.empty-state-container .empty-state-action-btn {
+  margin-top: 20px;
+  background-color: #db9761;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.empty-state-container .empty-state-action-btn:hover {
+  background-color: #cf8d58;
+  transform: scale(1.03);
+}
+
+
+
+/* Container Styles for Logo, Burger, Search, and User */
+/* .logo-container,
+.burger-container, */
+.search-container,
+.user-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo-container,
+.burger-container{
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo-container:hover,
+.burger-container:hover{
+  transform: scale(1.05);
+  background: #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container:hover,
+.user-container:hover {
+  transform: scale(1.05);
+  background: #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Logo Styles */
+.logo-container {
+  gap: 0px;
+}
+
+.logo-icon {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Burger Menu Styles */
+.burger-container {
+  margin-left: 15px;
+  padding: 8px;
+}
+
+.burger-btn {
+  background: none;
+  border: none;
+  padding: 0px 10px;
+  margin-left: -6px;
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burger-icon,
+.burger-icon::before,
+.burger-icon::after {
+  width: 24px;
+  height: 3px;
+  background: #333;
+  transition: all 0.3s ease;
+}
+
+.burger-icon {
+  position: relative;
+}
+
+.burger-icon::before,
+.burger-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.burger-icon::before {
+  top: -8px;
+}
+
+.burger-icon::after {
+  top: 8px;
+}
+
+.burger-btn.active .burger-icon {
+  background: transparent;
+}
+
+.burger-btn.active .burger-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.burger-btn.active .burger-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+/* Sidebar Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 20%;
+  color: #333;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e9ecef;
+  color: #ff8000;
+  transform: scale(1.1);
+}
+
+.close-btn i {
+  font-size: 1.2rem;
+}
+
+/* Sidebar Menu Styles */
+.nav-link {
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  background: #e9ecef;
+  color: #ff8000;
+  transform: scale(1.1);
+}
+
+.nav-link i {
+  font-size: 1.1rem;
+}
+
+/* Search Bar Styles */
+.search-container {
+  flex-grow: 1;
+  max-width: 600px;
+  margin: 0 12px;
+}
+
+.input-group {
+  width: 100%;
+  margin: 0;
+}
+
+.input-group .form-control {
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+  background: #fff;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-group .form-control:focus {
+  border-color: #e7a16a;
+}
+
+.input-group .btn {
+  border-radius: 0 8px 8px 0;
+  background-color: #db9761;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #db9761;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.input-group .btn:hover {
+  background-color: #cf8d58;
+  border-color: #cf8d58;
+}
+
+/* User Profile Styles */
+.user-container {
+  gap: 10px;
+  margin-right:7px;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  color:#e7a16a;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 1050;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-container,
+  .burger-container,
+  .search-container,
+  .user-container {
+    padding: 6px 10px;
+  }
+
+  .burger-container {
+    margin-right: 4px;
+  }
+
+  .logo-container {
+    margin-left: 4px;
+  }
+
+  .logo-icon {
+    width: 80px;
+    height: 48px;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .user-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .username {
+    font-size: 0.9rem;
+  }
+
+  .search-container {
+    margin: 0 8px;
+  }
+}
+
+/* src/app/app.component.css */
+
+/* Стилі для кнопок Login/Register в хедері */
+.auth-links .btn-primary {
+  background-color: #db9761; /* Твій бажаний колір фону (наприклад, твій акцентний помаранчевий) */
+  border-color: #db9761;   /* Колір рамки */
+  color: #fff;              /* Колір тексту */
+  padding: 8px 18px;       /* Можеш налаштувати відступи */
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-links .btn-primary:hover {
+  background-color: #cf8d58; /* Темніший відтінок для hover-ефекту */
+  border-color: #cf8d58;
+  transform: translateY(-1px); /* Легкий ефект підняття */
+}
+
+.auth-links .btn-outline-primary {
+  color: #db9761;           /* Колір тексту та рамки */
+  border-color: #db9761;
+  background-color: transparent; /* Прозорий фон */
+  padding: 8px 18px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-links .btn-outline-primary:hover {
+  background-color: #db9761; /* Фон стає акцентним при наведенні */
+  color: #fff;                /* Текст стає білим */
+  border-color: #db9761;
+  transform: translateY(-1px);
+}
+
+/* Якщо хочеш, щоб обидві кнопки виглядали однаково (наприклад, обидві суцільні) */
+/*
+.auth-links .btn-outline-primary,
+.auth-links .btn-primary {
+  background-color: #db9761;
+  border-color: #db9761;
+  color: #fff;
+  padding: 8px 18px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-links .btn-outline-primary:hover,
+.auth-links .btn-primary:hover {
+  background-color: #cf8d58;
+  border-color: #cf8d58;
+  transform: translateY(-1px);
+}
+*/
+
+/* app.component.css */
+.header-cart-icon {
+  position: relative;
+  color: #555; /* Колір іконки */
+  text-decoration: none;
+  padding: 5px; /* Для зручності кліку */
+  display: inline-block;
+}
+.header-cart-icon:hover {
+  color: #db9761; /* Твій акцентний колір */
+}
+.header-cart-icon svg {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  background-color: #dc3545; /* Червоний для значка */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1;
+  border: 1px solid white; /* Біла обводка */
+}
+.cart-badge.hidden {
+  display: none;
+}

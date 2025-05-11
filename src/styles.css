@@ -1,0 +1,145 @@
+/* --- Початок стилів завантаження --- */
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px; /* Мінімальна висота, щоб було видно на порожній вкладці */
+  padding: 30px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.loading-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-dots div {
+  width: 12px;
+  height: 12px;
+  background-color: #db9761; /* Основний акцентний колір */
+  border-radius: 50%;
+  margin: 0 5px;
+  animation: pulse 1.4s infinite ease-in-out both;
+}
+
+.loading-dots div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #777;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+/* --- Кінець стилів завантаження --- */
+
+
+/* app.component.css (або твій головний файл стилів) */
+
+/* ... твої існуючі стилі для .user-container, .user-icon, .username ... */
+/* Важливо, щоб .user-profile-section був батьківським для .profile-dropdown-menu */
+.user-profile-section {
+  position: relative; /* Для абсолютного позиціонування дропдауну */
+}
+
+/* Якщо .user-container вже має стилі, адаптуй їх або додай ці */
+.user-container {
+  /* display: flex;  - вже є в тебе */
+  /* align-items: center; - вже є в тебе */
+  cursor: pointer;
+  /* padding: 8px 12px; - вже є в тебе */
+  /* border-radius: 12px; - вже є в тебе */
+  /* background: #f8f9fa; - вже є в тебе */
+  transition: background 0.2s ease;
+}
+.user-container:hover {
+  /* background: #e9ecef; - вже є в тебе */
+}
+.user-icon {
+    /* твої стилі */
+}
+.username {
+    /* твої стилі */
+    margin-right: 5px; /* Відступ для стрілки */
+}
+
+.dropdown-arrow {
+  width: 12px;
+  height: 12px;
+  fill: #555; /* Колір стрілки */
+  transition: transform 0.2s ease-in-out;
+}
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+
+.profile-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px); /* Розташування під .user-container з відступом */
+  right: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.17); /* Виразніша тінь */
+  width: 220px; /* Ширина дропдауну */
+  z-index: 1051; /* Має бути вище, ніж оверлей сайдбару, якщо вони можуть перекриватися */
+  border: 1px solid #e0e0e0;
+  overflow: hidden; /* Для анімації та border-radius */
+}
+
+.profile-dropdown-menu a,
+.profile-dropdown-menu .logout-btn {
+  display: block;
+  padding: 12px 20px; /* Збільшено відступи */
+  color: #333;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500; /* Трохи жирніший шрифт */
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.profile-dropdown-menu a:hover {
+  background-color: #f5f5f5; /* Світліший фон при наведенні */
+  color: #db9761; /* Твій акцентний колір */
+}
+
+.profile-dropdown-menu hr {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  margin: 6px 0; /* Зменшено вертикальні відступи для hr */
+}
+
+.profile-dropdown-menu .logout-btn {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: #d9534f; /* Червоний для виходу */
+  font-weight: 500;
+}
+
+.profile-dropdown-menu .logout-btn:hover {
+  background-color: rgba(217, 83, 79, 0.07); /* Дуже легкий червоний фон */
+  color: #c9302c; /* Темніший червоний */
+}

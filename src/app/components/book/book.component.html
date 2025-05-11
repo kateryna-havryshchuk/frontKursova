@@ -1,0 +1,36 @@
+<div class="container mt-5 book-list-page-container"> <h1 class="text-center mb-4 page-title">Books</h1> <div *ngIf="isLoadingBooks" class="loading-overlay">
+    <div class="loading-dots"> <div></div> <div></div> <div></div> </div>
+    <p class="loading-text">Loading books...</p>
+  </div>
+
+  <ng-container *ngIf="(books$ | async) as books; else noBooksOrLoading">
+    <div class="row books-grid"> <div class="col-md-4 mb-4 book-grid-item" *ngFor="let book of books"> <div class="card h-100 book-card"> 
+          <div class="book-card-image-wrapper" (click)="viewBookDetails(book.id)">
+            <img [src]="book.coverImageUrl || 'https://neelkanthpublishers.com/assets/bookcover_cover.png'" 
+                 class="card-img-top book-cover" 
+                 alt="{{ book.name }} Cover">
+          </div>
+          <div class="card-body book-card-info"> 
+            <h5 class="card-title book-title" (click)="viewBookDetails(book.id)">{{ book.name }}</h5> 
+            <p class="card-text book-author" *ngIf="book.author"> by {{ book.author.name }}
+            </p>
+            <p class="card-text book-genre" *ngIf="book.genreName"> Genre: {{ book.genreName }}
+            </p>
+            <p class="book-price">{{ book.price | currency:'USD' }}</p> <button class="btn add-to-cart-listpage-btn mt-auto" (click)="onAddToCart(book, $event)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus-fill me-1" viewBox="0 0 16 16">
+                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+              </svg>
+              Add to Cart
+            </button>
+            <button class="wishlist-btn" (click)="toggleWishlist(book, $event)" [class.active]="book.isInWishlist">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noBooksOrLoading>
+    <p *ngIf="!isLoadingBooks" class="text-center text-muted empty-list-message">No books found!</p> </ng-template>
+</div>

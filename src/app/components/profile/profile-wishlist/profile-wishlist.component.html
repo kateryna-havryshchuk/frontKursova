@@ -1,0 +1,59 @@
+<div class="wishlist-component-container">
+  <div class="wishlist-header">
+    <h2>Wishlist</h2>
+    <div class="view-toggle-buttons">
+      <button class="view-btn" [class.active]="currentView === 'grid'" (click)="setView('grid')" title="Grid View">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
+        </svg>
+      </button>
+      <button class="view-btn" [class.active]="currentView === 'list'" (click)="setView('list')" title="List View">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-dots"> <div></div> <div></div> <div></div> </div>
+    <p class="loading-text">Завантаження списку бажань...</p>
+  </div>
+
+  <div *ngIf="!isLoading && wishlistItems.length === 0" class="no-items-container">
+    <svg class="empty-state-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.808C-.488 3.965-.585 5.74.94 7.052L4.432 10.3H1.5a.5.5 0 0 0 0 1h3.998l.243.271A1.5 1.5 0 0 0 7 12.164V13.5a.5.5 0 0 0 1 0v-1.336a1.5 1.5 0 0 0 .825-.992L11.002 11h3.998a.5.5 0 0 0 0-1h-2.932l3.492-3.248C16.585 5.74 16.488 3.965 15.08 2.75c-.952-1.136-2.48-1.655-3.994-1.808C9.787.81 8.359.936 7.375 1.783L8 1.783ZM7.5 3.322C7.781 3.12 8.146 3 8.5 3c.354 0 .719.12 1 .322L8.5 5 7.5 3.322ZM5.231 2.21C6.182 2.014 7.244 2.02 8.062 2.55L7 3.844V3.5a.5.5 0 0 1 .5-.5c.18 0 .351.046.5.132L6.063 4.88C5.677 4.718 5.25 4.5 4.787 4.5c-.31 0-.612.06-.9.17L5.232 2.21ZM3.65 3.138C4.127 2.79 4.78 2.5 5.5 2.5c.272 0 .537.044.788.126L5.01 4.18C4.34 4.412 3.708 4.952 3.5 5.67L1.923 4.24C2.322 3.724 2.931 3.353 3.65 3.138Z"/>
+    </svg>
+    <h3>Ваш список бажань порожній</h3>
+    <p>Додайте книги, які вам сподобалися, щоб не загубити їх!</p>
+    <button class="discover-books-btn" (click)="navigateToBooks()">Знайти книги</button>
+  </div>
+
+  <div *ngIf="!isLoading && wishlistItems.length > 0"
+       class="wishlist-display-area"
+       [ngClass]="{
+         'grid-view': currentView === 'grid',
+         'list-view': currentView === 'list'
+       }">
+    <div *ngFor="let item of wishlistItems" class="wishlist-item-card" (click)="navigateToBookDetails(item.id)">
+      <div class="item-card-image-wrapper">
+        <img [src]="item.coverImageUrl || 'assets/images/book_placeholder.png'" alt="{{ item.name }} Cover" />
+        <button class="remove-item-btn" (click)="removeFromWishlist(item.id, $event)" title="Remove from wishlist">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="item-card-info">
+        <h3 class="item-title">{{ item.name }}</h3>
+        <p class="item-author" *ngIf="item.author">by {{ item.author }}</p>
+        <p class="item-author" *ngIf="!item.author && currentView === 'grid'">Author Unknown</p> <p class="item-author-list-view" *ngIf="!item.author && currentView === 'list'">Author Unknown</p> <p class="item-price" *ngIf="item.price">{{ item.price | currency:'USD' }}</p>
+
+        <div class="item-actions">
+            <button *ngIf="currentView === 'grid'" class="add-to-cart-btn grid-btn" (click)="addToCart(item.id, $event)">Add to Cart</button>
+            <button *ngIf="currentView === 'list'" class="add-to-cart-btn list-btn" (click)="addToCart(item.id, $event)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

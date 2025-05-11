@@ -1,0 +1,353 @@
+/* src/app/components/profile/orders/profile-orders.component.css */
+:host {
+  display: block;
+  padding: 25px; /* Збільшимо трохи відступ для всієї вкладки */
+  background-color: #fff;
+  border-radius: 0 0 10px 10px; /* Заокруглення знизу, якщо .profile-content не має свого */
+  box-sizing: border-box;
+}
+
+/* --- Початок стилів "Гарного завантаження" --- */
+/* Щоб використати це "гарне завантаження", твій HTML для isLoading має бути таким:
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <p class="loading-text">Завантаження замовлень...</p>
+</div>
+*/
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 20px;
+}
+
+.loading-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-dots div {
+  width: 12px;
+  height: 12px;
+  background-color: #db9761;
+  border-radius: 50%;
+  margin: 0 5px;
+  animation: pulse 1.4s infinite ease-in-out both;
+}
+
+.loading-dots div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #777;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+/* --- Кінець стилів "Гарного завантаження" --- */
+
+/* Якщо ти використовуєш простий варіант <div class="loading-spinner"><p>Loading...</p></div> */
+/* то ось прості стилі для нього: */
+.loading-spinner { /* Стиль для твого поточного HTML завантаження */
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #777;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Заголовок вкладки "Orders" */
+.orders-container > h2 { /* Звертаємось до h2 всередині .orders-container */
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 25px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Контейнер списку замовлень - відповідає твоєму .order-list в HTML */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Картка одного замовлення - відповідає твоєму .order-item в HTML */
+.order-item {
+  background-color: #ffffff;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  padding: 20px 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04); /* М'якша тінь */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  display: flex; /* Для кращого розташування .order-summary та кнопки */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Дозволяє кнопці переноситися */
+}
+
+.order-item:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* Виразніша тінь при наведенні */
+  border-color: #db9761; /* Підсвічування рамки акцентним кольором */
+  transform: translateY(-3px); /* Легкий ефект підняття */
+}
+
+/* Блок з основною інформацією про замовлення - відповідає .order-summary в HTML */
+.order-summary {
+  flex-grow: 1; /* Займає доступний простір */
+}
+
+.order-summary p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+}
+.order-summary p strong { /* Для "Order #..." */
+  font-weight: 600; /* Зробимо жирнішим */
+  color: #333;
+  font-size: 17px; /* Трохи більший шрифт для номера замовлення */
+}
+
+/* Стиль для span зі статусом - відповідає .status в HTML */
+.status { /* Змінено з .order-status на .status */
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 0.9em;
+  text-transform: capitalize;
+  display: inline-block;
+}
+/* Ці класи будуть застосовані через [ngClass], тому вони правильні */
+.status-delivered { background-color: rgba(40, 167, 69, 0.15); color: #1a6e2c; }
+.status-pending { background-color: rgba(255, 193, 7, 0.15); color: #b38600; }
+.status-shipped { background-color: rgba(23, 162, 184, 0.15); color: #0f5c68; }
+.status-cancelled { background-color: rgba(220, 53, 69, 0.1); color: #8c2a32; }
+
+/* Кнопка "View Details" - відповідає .view-order-btn в HTML */
+.view-order-btn { /* Змінено з .details-btn на .view-order-btn */
+  background-color: #db9761;
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Збільшимо трохи padding */
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left: 15px; /* Відступ від тексту, якщо в одному рядку */
+  white-space: nowrap; /* Щоб текст кнопки не переносився */
+}
+
+.view-order-btn:hover {
+  background-color: #cf8d58; /* Темніший відтінок при наведенні */
+  transform: scale(1.05) translateY(-1px); /* Ефект підняття та збільшення */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- Стилі для модального вікна деталей замовлення (залишаються схожими) --- */
+.order-details-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65); /* Трохи темніший оверлей */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Вищий z-index */
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0; /* Початкова прозорість для анімації */
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+@keyframes fadeInOverlay {
+  to { opacity: 1; }
+}
+
+
+.order-details-content {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Виразніша тінь */
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.95); /* Початковий розмір для анімації */
+  opacity: 0;
+  animation: scaleInModal 0.35s 0.1s ease-out forwards;
+}
+@keyframes scaleInModal {
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+.order-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.order-details-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.order-details-close-btn {
+  background: none;
+  border: none;
+  font-size: 28px; /* Збільшимо хрестик */
+  color: #aaa;
+  cursor: pointer;
+  padding: 0px 5px; /* Зменшимо padding, щоб хрестик був щільніший */
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.order-details-close-btn:hover {
+  color: #db9761; /* Акцентний колір при наведенні */
+  transform: rotate(90deg) scale(1.1); /* Ефект обертання */
+}
+
+.order-details-section {
+  margin-bottom: 20px;
+}
+
+.order-details-section h4 {
+  font-size: 17px; /* Трохи більший підзаголовок */
+  font-weight: 600;
+  color: #db9761;
+  margin-bottom: 12px; /* Збільшимо відступ */
+}
+
+.order-details-section p,
+.order-details-items-list li {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.order-details-section p strong {
+  color: #333;
+  font-weight: 500; /* Зробимо стандартний жирний */
+  margin-right: 5px;
+}
+
+.order-details-items-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.order-details-items-list li {
+  padding: 12px 0; /* Збільшимо відступ */
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Вирівнюємо по центру */
+}
+.order-details-items-list li:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  font-weight: 500; /* Зробимо стандартний жирний */
+  color: #333;
+}
+.item-details {
+  color: #777;
+  font-size: 13px; /* Менший шрифт для деталей */
+}
+.order-details-items-list li > span:last-child { /* Для ціни товару */
+    font-weight: 500;
+    color: #333;
+}
+
+
+/* Порожній стан для замовлень - відповідає .no-orders в HTML */
+.no-orders { /* Змінено з .no-orders-container на .no-orders */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 200px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #e0e0e0; /* Додамо рамку */
+}
+.no-orders p {
+  font-size: 17px; /* Зробимо текст трохи більшим */
+  color: #777;
+  margin-bottom: 20px; /* Більший відступ */
+  line-height: 1.6;
+}
+/* Якщо ти захочеш додати кнопку "Shop Now" в HTML всередині .no-orders */
+.no-orders .shop-now-btn {
+  background-color: #db9761;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.no-orders .shop-now-btn:hover {
+  background-color: #cf8d58;
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(219,151,97,0.3);
+}
+
+
+@media (max-width: 768px) {
+  .order-item { /* Змінено з .order-card-body */
+    flex-direction: column;
+    align-items: flex-start; /* Вирівнювання по лівому краю */
+  }
+  .view-order-btn { /* Змінено з .details-btn */
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 0; /* Скидаємо відступ зліва на мобільних */
+  }
+  .order-details-content {
+    padding: 20px 15px; /* Менші відступи для модалки на мобільних */
+  }
+}

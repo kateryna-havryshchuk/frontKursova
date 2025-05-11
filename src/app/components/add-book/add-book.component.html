@@ -1,0 +1,241 @@
+<div class="add-book-form-card">
+  <h1 *ngIf="currentStep === 1">Add Book - Step 1: Basic Info</h1>
+  <h1 *ngIf="currentStep === 2">Add Book - Step 2: Publication & Description</h1>
+  <h1 *ngIf="currentStep === 3 && isAddingNewAuthor">Add Book - Step 3: New Author Details</h1>
+
+  <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <div *ngIf="currentStep === 1" class="form-step step-1-content">
+      <div class="form-group">
+        <label for="name" class="form-label">Book Name <span class="required-asterisk">*</span></label>
+        <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter book name"
+               [ngClass]="{ 'is-invalid': nameCtrl?.invalid && (nameCtrl?.dirty || nameCtrl?.touched) }">
+        <div *ngIf="nameCtrl?.invalid && (nameCtrl?.dirty || nameCtrl?.touched)" class="invalid-feedback">
+          <small *ngIf="nameCtrl?.errors?.['required']">Book name is required.</small>
+        </div>
+      </div>
+
+      <div class="form-group searchable-dropdown-group">
+        <label class="form-label">Author <span class="required-asterisk">*</span></label>
+        <div *ngIf="!isAddingNewAuthor">
+          <input type="text" class="form-control" placeholder="Search or type to add new author..."
+                 formControlName="authorSearch"
+                 (input)="onAuthorSearchChange($event)"
+                 [ngClass]="{ 'is-invalid': authorSearchCtrl?.invalid && (authorSearchCtrl?.dirty || authorSearchCtrl?.touched) }">
+          <div *ngIf="isLoadingAuthors" class="spinner-inline"></div>
+          <ul *ngIf="(authorSearchResults$ | async) as authors" class="search-results-list">
+            <li *ngFor="let author of authors" (click)="selectAuthor(author)">{{ author.name }}</li>
+            <li *ngIf="authors.length === 0 && authorSearchCtrl?.value?.length > 1 && !isLoadingAuthors" class="no-results">No authors found.</li>
+          </ul>
+          <div *ngIf="authorSearchCtrl?.invalid && (authorSearchCtrl?.dirty || authorSearchCtrl?.touched)" class="invalid-feedback mt-1">
+             <small *ngIf="authorSearchCtrl?.errors?.['required']">Author is required.</small>
+             <small *ngIf="authorSearchCtrl?.errors?.['selectionOrNewRequired']">Select an author or switch to add new.</small>
+           </div>
+          <button type="button" class="btn-link-add-new" (click)="toggleAddNewAuthor()">+ Add New Author</button>
+        </div>
+        <div *ngIf="isAddingNewAuthor">
+          <input type="text" class="form-control" placeholder="Enter new author's name"
+                 formControlName="newAuthorName"
+                 [ngClass]="{ 'is-invalid': newAuthorNameCtrl?.invalid && (newAuthorNameCtrl?.dirty || newAuthorNameCtrl?.touched) }">
+          <div *ngIf="newAuthorNameCtrl?.invalid && (newAuthorNameCtrl?.dirty || newAuthorNameCtrl?.touched)" class="invalid-feedback">
+             <small *ngIf="newAuthorNameCtrl?.errors?.['required']">New author name is required.</small>
+             <small *ngIf="newAuthorNameCtrl?.errors?.['minlength']">Must be at least 3 characters.</small>
+           </div>
+          <button type="button" class="btn-link-cancel-new" (click)="toggleAddNewAuthor()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="form-group searchable-dropdown-group">
+        <label class="form-label">Genre <span class="required-asterisk">*</span></label>
+        <div *ngIf="!isAddingNewGenre">
+          <input type="text" class="form-control" placeholder="Search or type to add new genre..."
+                 formControlName="genreSearch"
+                 (input)="onGenreSearchChange($event)"
+                 [ngClass]="{ 'is-invalid': genreSearchCtrl?.invalid && (genreSearchCtrl?.dirty || genreSearchCtrl?.touched) }">
+          <div *ngIf="isLoadingGenres" class="spinner-inline"></div>
+          <ul *ngIf="(genreSearchResults$ | async) as genres" class="search-results-list">
+            <li *ngFor="let genre of genres" (click)="selectGenre(genre)">{{ genre.name }}</li>
+            <li *ngIf="genres.length === 0 && genreSearchCtrl?.value?.length > 1 && !isLoadingGenres" class="no-results">No genres found.</li>
+          </ul>
+          <div *ngIf="genreSearchCtrl?.invalid && (genreSearchCtrl?.dirty || genreSearchCtrl?.touched)" class="invalid-feedback mt-1">
+             <small *ngIf="genreSearchCtrl?.errors?.['required']">Genre is required.</small>
+             <small *ngIf="genreSearchCtrl?.errors?.['selectionOrNewRequired']">Select a genre or switch to add new.</small>
+           </div>
+          <button type="button" class="btn-link-add-new" (click)="toggleAddNewGenre()">+ Add New Genre</button>
+        </div>
+        <div *ngIf="isAddingNewGenre">
+          <input type="text" class="form-control" placeholder="Enter new genre name"
+                 formControlName="newGenreName"
+                 [ngClass]="{ 'is-invalid': newGenreNameCtrl?.invalid && (newGenreNameCtrl?.dirty || newGenreNameCtrl?.touched) }">
+            <div *ngIf="newGenreNameCtrl?.invalid && (newGenreNameCtrl?.dirty || newGenreNameCtrl?.touched)" class="invalid-feedback">
+             <small *ngIf="newGenreNameCtrl?.errors?.['required']">New genre name is required.</small>
+             <small *ngIf="newGenreNameCtrl?.errors?.['minlength']">Must be at least 2 characters.</small>
+           </div>
+          <button type="button" class="btn-link-cancel-new" (click)="toggleAddNewGenre()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="price" class="form-label">Price <span class="required-asterisk">*</span></label>
+        <input type="number" id="price" formControlName="price" class="form-control" placeholder="e.g., 19.99"
+               [ngClass]="{ 'is-invalid': priceCtrl?.invalid && (priceCtrl?.dirty || priceCtrl?.touched) }">
+        <div *ngIf="priceCtrl?.invalid && (priceCtrl?.dirty || priceCtrl?.touched)" class="invalid-feedback">
+          <small *ngIf="priceCtrl?.errors?.['required']">Price is required.</small>
+          <small *ngIf="priceCtrl?.errors?.['pattern']">Invalid price format (e.g., 19.99).</small>
+        </div>
+      </div>
+
+      <!-- Оновлюємо поле мови -->
+      <div class="form-group">
+        <label for="language" class="form-label">Language <span class="required-asterisk">*</span></label>
+        <input type="text" 
+               id="language" 
+               formControlName="language" 
+               class="form-control" 
+               placeholder="Enter language"
+               [ngClass]="{ 'is-invalid': languageCtrl?.invalid && (languageCtrl?.dirty || languageCtrl?.touched) }">
+        <div *ngIf="languageCtrl?.invalid && (languageCtrl?.dirty || languageCtrl?.touched)" 
+             class="invalid-feedback">
+          <small *ngIf="languageCtrl?.errors?.['required']">Language is required.</small>
+        </div>
+      </div>
+
+      <!-- Додаємо нове поле для видавництва після поля мови -->
+      <div class="form-group">
+        <label for="publisher" class="form-label">Publisher <span class="required-asterisk">*</span></label>
+        <input type="text" 
+               id="publisher" 
+               formControlName="publisher" 
+               class="form-control" 
+               placeholder="Enter publisher name"
+               [ngClass]="{ 'is-invalid': publisherCtrl?.invalid && (publisherCtrl?.dirty || publisherCtrl?.touched) }">
+        <div *ngIf="publisherCtrl?.invalid && (publisherCtrl?.dirty || publisherCtrl?.touched)" 
+             class="invalid-feedback">
+          <small *ngIf="publisherCtrl?.errors?.['required']">Publisher is required.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="numberOfPages" class="form-label">Pages <span class="required-asterisk">*</span></label>
+        <input type="number" id="numberOfPages" formControlName="numberOfPages" class="form-control" placeholder="Enter number of pages"
+               [ngClass]="{ 'is-invalid': numberOfPagesCtrl?.invalid && (numberOfPagesCtrl?.dirty || numberOfPagesCtrl?.touched) }">
+        <div *ngIf="numberOfPagesCtrl?.invalid && (numberOfPagesCtrl?.dirty || numberOfPagesCtrl?.touched)" class="invalid-feedback">
+          <small *ngIf="numberOfPagesCtrl?.errors?.['required']">Number of pages is required.</small>
+          <small *ngIf="numberOfPagesCtrl?.errors?.['min']">Must be at least 1 page.</small>
+          <small *ngIf="numberOfPagesCtrl?.errors?.['pattern']">Invalid number format.</small>
+        </div>
+      </div>
+
+      <!-- Замініть існуючий div для publicationYear на цей -->
+      <div class="form-group">
+        <label for="publicationYear" class="form-label">Publication Year <span class="required-asterisk">*</span></label>
+        <div class="year-input-wrapper">
+          <input type="number" 
+                 id="publicationYear" 
+                 formControlName="publicationYear" 
+                 class="form-control"
+                 [min]="1000"
+                 [max]="currentYear"
+                 placeholder="Select year"
+                 readonly
+                 (click)="toggleYearPicker()"
+                 [ngClass]="{ 'is-invalid': publicationYearCtrl?.invalid && (publicationYearCtrl?.dirty || publicationYearCtrl?.touched) }">
+          <button type="button" class="year-picker-toggle" (click)="toggleYearPicker()">
+            📅
+          </button>
+          <div *ngIf="showYearPicker" class="year-picker">
+            <div class="year-picker-header">
+              <button type="button" (click)="changeYearRange(-20)">◀</button>
+              <span>{{ yearRange.start }} - {{ yearRange.end }}</span>
+              <button type="button" (click)="changeYearRange(20)">▶</button>
+            </div>
+            <div class="year-picker-grid">
+              <button type="button"
+                      *ngFor="let year of getYearRange()"
+                      [class.selected]="year === addBookForm.get('publicationYear')?.value"
+                      [disabled]="year > currentYear"
+                      (click)="selectYear(year)">
+                {{ year }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="publicationYearCtrl?.invalid && (publicationYearCtrl?.dirty || publicationYearCtrl?.touched)" 
+             class="invalid-feedback">
+          <small *ngIf="publicationYearCtrl?.errors?.['required']">Publication year is required.</small>
+          <small *ngIf="publicationYearCtrl?.errors?.['min']">Year must be 1000 or later.</small>
+          <small *ngIf="publicationYearCtrl?.errors?.['max']">Year cannot be in the future.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coverImageUrl" class="form-label">Cover Image URL (Optional)</label>
+        <input type="url" 
+               id="coverImageUrl" 
+               formControlName="coverImageUrl" 
+               class="form-control" 
+               placeholder="Enter image URL">
+        <div class="cover-preview" *ngIf="coverImageUrl?.value">
+          <img [src]="coverImageUrl?.value" 
+               alt="Book cover preview" 
+               (error)="handleImageError($event)">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 2" class="form-step step-2-content">
+      <div class="form-group">
+        <label for="isbn" class="form-label">ISBN <span class="required-asterisk">*</span></label>
+        <input type="text" id="isbn" formControlName="isbn" class="form-control" placeholder="Enter ISBN (10 or 13 digits)"
+               [ngClass]="{ 'is-invalid': isbnCtrl?.invalid && (isbnCtrl?.dirty || isbnCtrl?.touched) }">
+        <div *ngIf="isbnCtrl?.invalid && (isbnCtrl?.dirty || isbnCtrl?.touched)" class="invalid-feedback">
+          <small *ngIf="isbnCtrl?.errors?.['required']">ISBN is required.</small>
+          <small *ngIf="isbnCtrl?.errors?.['pattern']">Invalid ISBN format.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label">Book Description (Optional)</label>
+        <textarea id="description" formControlName="description" class="form-control" rows="6"
+                  placeholder="Enter a brief description of the book..."></textarea>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 3 && isAddingNewAuthor" class="form-step step-3-content">
+       <div class="form-group">
+        <label class="form-label">New Author Name:</label>
+        <p class="new-author-name-display">{{ addBookForm.get('newAuthorName')?.value || 'N/A' }}</p>
+      </div>
+      <div class="form-group">
+        <label for="authorBiography" class="form-label">Author Biography (Optional)</label>
+        <textarea id="authorBiography" formControlName="authorBiography" class="form-control" rows="6"
+                  placeholder="Enter author's biography..."></textarea>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message global-error mt-3">
+      {{ errorMessage }}
+    </div>
+
+    <div class="form-navigation-buttons">
+      <button type="button" *ngIf="currentStep > 1" (click)="prevStep()" class="btn-secondary-action">
+        Previous
+      </button>
+      
+      <button type="button" 
+              *ngIf="currentStep === 1 || (currentStep === 2 && isAddingNewAuthor && addBookForm.get('newAuthorName')?.value)" 
+              (click)="nextStep()" 
+              class="submit-btn next-btn">
+        Next
+      </button>
+
+      <button type="submit" 
+              *ngIf="(currentStep === 2 && (!isAddingNewAuthor || !addBookForm.get('newAuthorName')?.value)) || (currentStep === 3 && isAddingNewAuthor && addBookForm.get('newAuthorName')?.value)" 
+              class="submit-btn save-btn" 
+              [disabled]="isSubmitting || addBookForm.invalid"> <span *ngIf="!isSubmitting">Save Book</span>
+        <span *ngIf="isSubmitting">Saving...</span>
+      </button>
+    </div>
+
+  </form>
+</div>

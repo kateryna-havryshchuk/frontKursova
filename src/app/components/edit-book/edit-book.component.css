@@ -1,0 +1,202 @@
+/* src/app/components/edit-book/edit-book.component.css */
+/* Повністю скопіюй сюди вміст з add-book.component.css */
+/* (той, що починається з :host { display: block; font-family: 'Poppins', sans-serif; } 
+   і містить стилі для .add-book-form-card, .form-step, .searchable-dropdown-group,
+   .year-picker, .form-navigation-buttons і т.д.)
+*/
+
+/* Якщо ти використовувала клас .add-book-form-card в add-book.component.css, 
+   і цей же клас використовується в edit-book.component.html, 
+   то стилі автоматично підхопляться. 
+   Переконайся, що назви класів в HTML та CSS однакові.
+   Я в HTML для edit-book використав той самий клас .add-book-form-card.
+*/
+
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+}
+
+.add-book-form-card { /* Такий самий клас, як для форми додавання */
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 550px; 
+  margin: 40px auto;
+  box-sizing: border-box;
+}
+
+.add-book-form-card h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-step {
+  animation: stepFadeIn 0.4s ease-in-out;
+  margin-bottom: 15px;
+}
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group { margin-bottom: 18px; }
+.form-label { display: block; font-weight: 500; color: #555; margin-bottom: 7px; font-size: 14px; }
+.form-label .required-asterisk { color: #dc3545; margin-left: 2px; }
+
+.form-control {
+  width: 100%; padding: 10px 14px; border: 1px solid #dce1e5;
+  border-radius: 6px; font-size: 15px; box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: #f9fafb; color: #333;
+}
+.form-control:focus {
+  border-color: #db9761; box-shadow: 0 0 0 3px rgba(219, 151, 97, 0.15);
+  outline: none; background-color: #fff;
+}
+.form-control.is-invalid { border-color: #e74c3c; }
+.form-control.is-invalid:focus { box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15); }
+
+input[type="number"].form-control[readonly] { /* Для поля року, якщо readonly */
+    background-color: #f0f3f5; /* Трохи інший фон для readonly */
+    cursor: pointer;
+}
+input[type="number"].form-control[readonly]:focus {
+    border-color: #dce1e5; /* Стандартна рамка при фокусі на readonly */
+    box-shadow: none;
+}
+
+
+textarea.form-control { min-height: 100px; line-height: 1.5; resize: vertical; }
+.invalid-feedback small { display: block; color: #e74c3c; font-size: 12.5px; margin-top: 5px; }
+
+.searchable-dropdown-group { position: relative; }
+.searchable-dropdown-group input.form-control { padding-right: 35px; }
+.search-results-list {
+  list-style: none; padding: 0; margin: 4px 0 0 0; border: 1px solid #e0e0e0;
+  border-radius: 6px; background-color: #fff; position: absolute; width: 100%;
+  max-height: 160px; overflow-y: auto; z-index: 100; box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+.search-results-list li { padding: 9px 14px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+.search-results-list li:last-child { border-bottom: none; }
+.search-results-list li:hover { background-color: #f0f0f0; }
+.search-results-list li.no-results { color: #888; font-style: italic; cursor: default; background-color: #fff !important; }
+
+.spinner-inline {
+  display: inline-block; border: 2px solid #f0f0f0; border-top: 2px solid #db9761;
+  border-radius: 50%; width: 18px; height: 18px; animation: spin 0.7s linear infinite;
+  position: absolute; right: 12px; top: calc(50% + 4px); transform: translateY(-50%);
+}
+@keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } }
+
+.btn-link-add-new, .btn-link-cancel-new {
+  background: none; border: none; color: #db9761; cursor: pointer; padding: 0;
+  font-size: 13px; font-weight: 500; margin-top: 8px; display: inline-block;
+}
+.btn-link-add-new:hover, .btn-link-cancel-new:hover { text-decoration: underline; }
+.btn-link-cancel-new { color: #777; margin-left: 10px; }
+
+.new-author-name-display {
+  font-size: 15px; font-weight: 500; color: #333; background-color: #f0f3f5;
+  padding: 10px 14px; border-radius: 6px; border: 1px solid #dce1e5;
+}
+
+/* Стилі для кастомного вибору року */
+.year-input-wrapper { position: relative; display: flex; align-items: center; }
+.year-input-wrapper input.form-control[readonly] { background-color: #fdfdfd; cursor: pointer; }
+.year-input-wrapper input.form-control[readonly]:focus { box-shadow: none; border-color: #dce1e5; }
+.year-picker-toggle-btn {
+  background: transparent; border: none; padding: 0; margin: 0; position: absolute;
+  right: 0px; top: 0; height: 100%; width: 40px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; color: #6c757d; z-index: 2;
+  border-radius: 0 6px 6px 0;
+}
+.year-picker-toggle-btn:hover svg { color: #db9761; }
+.year-picker-toggle-btn svg { width: 18px; height: 18px; pointer-events: none; transition: color 0.2s ease; }
+
+.year-picker {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; background-color: #fff;
+  border: 1px solid #dce1e5; border-radius: 8px; box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  z-index: 1050; width: auto; max-width: 280px; box-sizing: border-box;
+}
+.year-picker-header {
+  display: flex; justify-content: space-between; align-items: center; padding: 10px 12px;
+  border-bottom: 1px solid #e9ecef; background-color: #f8f9fa; border-radius: 8px 8px 0 0;
+}
+.year-picker-header button {
+  background: none; border: 1px solid transparent; padding: 4px 8px; cursor: pointer;
+  color: #555; font-size: 18px; line-height: 1; transition: color 0.2s ease;
+}
+.year-picker-header button:hover { color: #db9761; }
+.year-picker-header span { font-weight: 600; color: #333; font-size: 15px; }
+.year-picker-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 10px;
+  max-height: 190px; overflow-y: auto;
+}
+.year-picker-grid button {
+  padding: 8px 5px; border: 1px solid transparent; background-color: #fff; color: #444;
+  cursor: pointer; border-radius: 4px; font-size: 14px; text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.year-picker-grid button:hover:not([disabled]) { background-color: #e9ecef; color: #db9761; }
+.year-picker-grid button.selected { background-color: #db9761; color: white; border-color: #db9761; font-weight: 500; }
+.year-picker-grid button[disabled] { color: #adb5bd; background-color: #f8f9fa; cursor: not-allowed; }
+
+.cover-preview {
+  margin-top: 10px; max-width: 150px; border: 1px solid #e0e0e0; border-radius: 4px;
+  overflow: hidden; background-color: #f8f9fa; display: flex; align-items: center;
+  justify-content: center; min-height: 100px;
+}
+.cover-preview img { width: 100%; height: auto; display: block; aspect-ratio: 2 / 3; object-fit: contain; max-height: 220px; }
+
+
+.form-navigation-buttons {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 35px; padding-top: 20px; border-top: 1px solid #e0e0e0;
+}
+.submit-btn, .btn-secondary-action {
+  border: none; padding: 10px 22px; border-radius: 8px; cursor: pointer;
+  font-weight: 600; font-size: 15px;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 130px; text-align: center;
+}
+.submit-btn.next-btn, .submit-btn.save-btn { background-color: #db9761; color: white; }
+.submit-btn.next-btn:hover:not(:disabled), .submit-btn.save-btn:hover:not(:disabled) {
+  background-color: #cf8d58; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(219, 151, 97, 0.2);
+}
+.submit-btn:disabled { background-color: #e9c8b0; color: #fff; cursor: not-allowed; box-shadow: none; transform: none;}
+.btn-secondary-action { background-color: #6c757d; color: white; }
+.btn-secondary-action:hover:not(:disabled) {
+  background-color: #5a6268; transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.btn-secondary-action:disabled { background-color: #adb5bd; cursor: not-allowed; }
+.form-navigation-buttons button:only-child { margin-left: auto; margin-right: auto; }
+
+.error-message.global-error {
+  color: #e74c3c; background-color: rgba(231, 76, 60, 0.05);
+  border: 1px solid rgba(231, 76, 60, 0.15); padding: 10px 15px;
+  border-radius: 6px; text-align: center; font-size: 14px; margin-bottom: 20px;
+}
+
+/* Стилі для індикатора завантаження даних книги */
+.loading-overlay {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; min-height: 300px; /* Зробив вищим, щоб було помітно */
+  padding: 20px;
+}
+/* ... (loading-dots, loading-text, @keyframes pulse - як у add-book.component.css) ... */
+
+
+@media (max-width: 768px) {
+  .add-book-form-card { margin: 20px auto; padding: 25px 20px; max-width: 100%; }
+  .add-book-form-card h1 { font-size: 20px; margin-bottom: 20px; }
+  .form-navigation-buttons { flex-direction: column-reverse; gap: 15px; }
+  .submit-btn, .btn-secondary-action { width: 100%; }
+}

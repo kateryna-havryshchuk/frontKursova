@@ -1,0 +1,213 @@
+/* Загальні стилі */
+/* Загальні стилі */
+body {
+    background: linear-gradient(135deg, #ff9a8b, #fad0c4) !important;
+    background-attachment: fixed; /* Фіксування фону */
+    height: 100vh; /* Переконайтесь, що весь екран заповнений */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+  /* Стилі для контейнера */
+  .container {
+    background: rgba(255, 255, 255, 0.9); /* Білий фон для контейнера */
+    border-radius: 10px; /* Заокруглені кути */
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    max-width: 1200px;
+    margin: 0 auto; /* Центрування контейнера */
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  /* Стилі для заголовка */
+  h1 {
+    color: #4a4a4a;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Стилі таблиці */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f0f4f8;
+    font-weight: bold;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+  }
+  
+  /* Оновлені стилі для кнопок */
+  .btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border: none;
+    margin: 5px;
+    background-color: #db9761; /* Бежевий колір */
+    color: white;
+  }
+  
+  .btn:hover {
+    background-color: #c88552;
+    transform: translateY(-1px) scale(1.02); /* Додано невелике збільшення */
+    box-shadow: 0 3px 8px rgba(219, 151, 97, 0.3);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-danger {
+    background: linear-gradient(135deg, #e52e71, #ff8a00);
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-sm {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+  
+  /* Додаткові стилі для покращення взаємодії */
+  .btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* Стиль для кнопки "Додати до вішліста" */
+  .wishlist-btn {
+    width: 32px; /* Зменшено з 35px */
+    height: 32px; /* Зменшено з 35px */
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .wishlist-btn i {
+    color: #db9761;
+    font-size: 1rem; /* Зменшено з 1.1rem */
+  }
+  
+  .wishlist-btn:hover {
+    transform: scale(1.1);
+    background-color: #fff5f5;
+  }
+  
+  .wishlist-btn.active {
+    background-color: #db9761;
+  }
+  
+  .wishlist-btn.active i {
+    color: white;
+  }
+  
+  /* Стилі для порожнього стану таблиці */
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-muted {
+    color: #888;
+  }
+  
+  /* Оновлені стилі для карток */
+  .card {
+    border-radius: 12px;
+    border: none;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 240px; /* Зменшено з 280px */
+    margin: 10px auto;
+  }
+  
+  .card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Стиль для обкладинки книги */
+  .book-cover {
+    width: 100%; /* Ширина обкладинки адаптується до контейнера */
+    height: 300px; /* Фіксована висота для всіх обкладинок */
+    object-fit: cover; /* Зберігає пропорції, обрізаючи зайве */
+    border-radius: 8px; /* Невелике заокруглення */
+    background-color: #f0f0f0; /* Світлий фон для випадків, коли зображення завантажується */
+  }
+
+  /* Анімація fadeIn для контейнера */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Оновлена адаптивність */
+  @media (max-width: 768px) {
+    .table th, .table td {
+      font-size: 0.9rem; /* Зменшення шрифту для маленьких екранів */
+    }
+  
+    .container {
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .btn {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+  
+    .card {
+      max-width: 240px;
+      margin-bottom: 15px;
+    }
+  }

@@ -1,0 +1,113 @@
+<div class="d-flex">
+  <!-- Overlay -->
+  <div class="overlay" [class.show]="isMenuOpen" (click)="closeMenu()"></div>
+
+  <!-- Sidebar -->
+  <nav [class.open]="isMenuOpen" class="sidebar" (click)="$event.stopPropagation()">
+    <div class="p-3">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="text-center mb-0">Menu</h5>
+        <button class="close-btn" (click)="closeMenu()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['books']" (click)="closeMenu()">
+            <i class="bi bi-book me-2"></i>Books
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['books', 'add']" (click)="closeMenu()">
+            <i class="bi bi-plus-circle me-2"></i>Add Book
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-grow-1">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- Left Side: Burger + Logo -->
+        <div class="d-flex align-items-center">
+          <!-- Menu Button -->
+          <div class="burger-container me-2">
+            <button class="burger-btn" (click)="toggleMenu()">
+              <span class="burger-icon"></span>
+            </button>
+          </div>
+
+          <!-- Logo -->
+          <a class="logo-container" [routerLink]="['/']">
+            <img src="assets/bookstore-icon.png" alt="Bookstore Icon" class="logo-icon">
+            <span class="navbar-brand">Tales & Tomes</span>
+          </a>
+        </div>
+
+        <!-- Center: Search Bar -->
+        <form class="search-container mx-auto" *ngIf="showSearchBar$ | async" (submit)="searchBooks()"
+          style="min-width: 300px; max-width: 500px; width: 100%;">
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search books by title..." aria-label="Search"
+              [(ngModel)]="searchQuery" name="searchQuery">
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+        </form>
+
+        <div class="d-flex align-items-center ms-auto"> <a routerLink="/cart" class="header-cart-icon me-3" title="Shopping Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            <span *ngIf="(cartItemCount$ | async) as count" [class.hidden]="count === 0" class="cart-badge">{{ count > 9 ? '9+' : count }}</span>
+          </a>
+
+          <ng-container *ngIf="authService.isAuthenticated$ | async; else showLoginLinks">
+            </ng-container>
+          <ng-template #showLoginLinks>
+            </ng-template>
+        </div>
+        
+        <!-- Right Side: User Profile -->
+        <ng-container *ngIf="(authService.isAuthenticated$ | async); else showLogin">
+          <div class="user-profile-section ms-3">
+            <div class="user-container" (click)="toggleProfileDropdown($event)" (mouseenter)="openProfileDropdown()"
+              (mouseleave)="closeProfileDropdownDebounced()">
+              <img src="assets/user-icon.png" alt="User Icon" class="user-icon">
+              <span class="username">{{ username }}</span>
+              <svg class="dropdown-arrow" [class.open]="isProfileDropdownOpen" xmlns="http://www.w3.org/2000/svg"
+                width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </div>
+            <div class="profile-dropdown-menu" *ngIf="isProfileDropdownOpen" @dropdownAnimation
+              (mouseenter)="cancelCloseDropdown()" (mouseleave)="closeProfileDropdownDebounced()">
+              <a (click)="navigateToProfileTab('overview')">Огляд</a>
+              <a (click)="navigateToProfileTab('orders')">Мої замовлення</a>
+              <a (click)="navigateToProfileTab('wishlist')">Список бажань</a>
+              <a (click)="navigateToProfileTab('settings')">Налаштування</a>
+              <hr>
+              <button class="logout-btn" (click)="logout()">Вийти</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #showLogin>
+          <div class="auth-links ms-3">
+            <a routerLink="/login" class="btn btn-outline-primary me-2">Login</a>
+            <a routerLink="/register" class="btn btn-primary">Register</a>
+          </div>
+        </ng-template>
+      </div>
+    </nav>
+
+
+    <!-- Router Outlet -->
+    <div class="p-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

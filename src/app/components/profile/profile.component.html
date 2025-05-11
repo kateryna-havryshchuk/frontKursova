@@ -1,0 +1,30 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img [src]="profileImageUrl" alt="User Avatar" />
+    </div>
+    <div class="profile-info">
+      <h1 class="profile-name">{{ profileName }}</h1>
+      <p class="profile-email">{{ profileEmail }}</p>
+      <button class="edit-profile-btn" (click)="onEditProfile()">Edit Profile</button>
+    </div>
+  </div>
+
+  <div class="profile-tabs">
+    <button class="tab-btn" [class.active]="activeTab === 'overview'" (click)="selectTab('overview')">Overview</button>
+    <button class="tab-btn" [class.active]="activeTab === 'orders'" (click)="selectTab('orders')">Orders</button>
+    <button class="tab-btn" [class.active]="activeTab === 'wishlist'" (click)="selectTab('wishlist')">Wishlist</button>
+    <button class="tab-btn" [class.active]="activeTab === 'settings'" (click)="selectTab('settings')">Settings</button>
+  </div>
+
+  <div class="profile-content" [ngSwitch]="activeTab">
+    <app-profile-overview *ngSwitchCase="'overview'"></app-profile-overview>
+    <app-profile-orders *ngSwitchCase="'orders'"></app-profile-orders>
+    <app-profile-wishlist *ngSwitchCase="'wishlist'"></app-profile-wishlist>
+    <app-profile-settings *ngSwitchCase="'settings'"></app-profile-settings>
+
+    <div *ngSwitchDefault>
+        <p>Please select a tab.</p>
+    </div>
+  </div>
+</div>

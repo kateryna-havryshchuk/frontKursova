@@ -1,0 +1,136 @@
+<div class="book-details">
+  <div class="book-details-container">
+    <!-- Book Image -->
+    <div class="book-image">
+      <img [src]="book?.coverImageUrl || 'https://neelkanthpublishers.com/assets/bookcover_cover.png'" 
+           class="book-details-cover" 
+           alt="{{ book?.name || 'Default Book' }} Cover">
+    </div>
+
+    <!-- Book Information -->
+    <div class="book-info">
+      <h1 class="book-title">Book Title</h1>
+      <h2 class="book-author">by Author Name</h2>
+      <p class="book-genre">Genre: Fiction</p>
+      <p class="book-publisher">Publisher: Publisher Name</p>
+      <p class="book-isbn">ISBN: 123-456-789</p>
+      <p class="book-price">$19.99</p>
+      <p class="book-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras
+        venenatis euismod malesuada.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="book-actions">
+        <button class="btn btn-primary">Add to Cart</button>
+        <button class="btn btn-secondary">Buy Now</button>
+        <button class="btn btn-outline-secondary">Add to Wishlist</button>
+        <!-- Нова кнопка для редагування -->
+        <button *ngIf="authService.isAdmin$ | async" 
+                class="btn btn-edit" 
+                (click)="onEditBook()">
+            <i class="fas fa-edit"></i> Edit Book
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section mt-5">
+    <h3>Customer Reviews ({{ reviews.length }})</h3>
+
+    <div class="write-review-toggle my-3" *ngIf="authService.isAuthenticated$ | async">
+      <button *ngIf="!showReviewForm && canWriteReview" (click)="toggleReviewForm()" class="btn btn-outline-primary">
+        Write a Review
+      </button>
+      <div *ngIf="hasUserReviewed && !showReviewForm" class="alert alert-info review-info-message">
+        You have already reviewed this book.
+      </div>
+    </div>
+    <div *ngIf="!(authService.isAuthenticated$ | async)" class="alert alert-warning review-info-message">
+      Please <a routerLink="/login" [queryParams]="{ returnUrl: router.url }">login</a> to write a review.
+    </div>
+
+
+    <div *ngIf="showReviewForm && canWriteReview" class="review-form-container card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Your Review for "{{ book?.name }}"</h4>
+        <form [formGroup]="reviewForm" (ngSubmit)="submitReview()" novalidate>
+
+          <div class="form-group rating-group">
+            <label class="form-label">Your Rating <span class="required-asterisk">*</span></label>
+            <div class="star-rating">
+              <button type="button" *ngFor="let star of [1, 2, 3, 4, 5]" (click)="onRatingSet(star)"
+                [class.selected]="star <= userRating" class="star-btn"
+                [attr.aria-label]="'Rate ' + star + ' out of 5 stars'"
+                [class.is-invalid]="ratingCtrl?.invalid && ratingCtrl?.touched">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                  class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="ratingCtrl?.invalid && ratingCtrl?.touched" class="invalid-feedback d-block">
+              <small *ngIf="ratingCtrl?.errors?.['required'] || ratingCtrl?.errors?.['min']">Rating is required (at
+                least 1 star).</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reviewComment" class="form-label">Your Comment <span class="required-asterisk">*</span></label>
+            <textarea id="reviewComment" formControlName="comment" class="form-control" rows="5"
+              placeholder="Share your thoughts about this book..."
+              [ngClass]="{ 'is-invalid': commentCtrl?.invalid && (commentCtrl?.dirty || commentCtrl?.touched) }"></textarea>
+            <div *ngIf="commentCtrl?.invalid && (commentCtrl?.dirty || commentCtrl?.touched)" class="invalid-feedback">
+              <small *ngIf="commentCtrl?.errors?.['required']">Comment is required.</small>
+              <small *ngIf="commentCtrl?.errors?.['minlength']">Comment must be at least 10 characters.</small>
+              <small *ngIf="commentCtrl?.errors?.['maxlength']">Comment cannot exceed 1000 characters.</small>
+            </div>
+          </div>
+
+          <div *ngIf="reviewError" class="alert alert-danger mt-3">
+            {{ reviewError }}
+          </div>
+
+          <div class="review-form-actions">
+            <button type="submit" class="btn btn-primary submit-review-btn"
+              [disabled]="isSubmittingReview || reviewForm.invalid">
+              <span *ngIf="!isSubmittingReview">Submit Review</span>
+              <span *ngIf="isSubmittingReview">Submitting...</span>
+            </button>
+            <button type="button" (click)="toggleReviewForm()" class="btn btn-secondary ms-2">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="isLoadingReviews" class="loading-overlay">
+      <div class="loading-dots">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <p class="loading-text">Loading reviews...</p>
+    </div>
+
+    <div *ngIf="!isLoadingReviews && reviews.length === 0 && !showReviewForm"
+      class="no-reviews-message alert alert-secondary">
+      There are no reviews for this book yet. Be the first to write one!
+    </div>
+
+    <div *ngIf="!isLoadingReviews && reviews.length > 0" class="reviews-list">
+      <div *ngFor="let review of reviews" class="review-item card mb-3">
+        <div class="card-body">
+          <div class="review-author-rating mb-2">
+            <strong class="review-username">{{ review.username }}</strong>
+            <span class="review-stars ms-2">
+              <svg *ngFor="let i of [1,2,3,4,5]" width="16" height="16" [attr.fill]="i <= review.rating ? '#ffc107' : '#e0e0e0'" class="bi bi-star-fill me-1" viewBox="0 0 16 16">
+                <path d="..." />
+              </svg>
+            </span>
+          </div>
+          <p class="review-comment card-text">{{ review.comment }}</p>
+          <small class="review-date text-muted">{{ review.createdAt | date:'medium' }}</small>
+        </div>
+      </div>
+    </div>
+  </div>

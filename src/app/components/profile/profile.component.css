@@ -1,0 +1,465 @@
+/* filepath: c:\Users\havrk\my\uni\4_term\newKursova\Frontend\BookstoreFrontend\src\app\components\profile\profile.component.css */
+
+
+/* General Styling */
+.profile-container {
+    font-family: 'Poppins', sans-serif; /* Updated font */
+    color: #333;
+    background-color: #f8f9fa; /* Updated background */
+    padding: 25px; /* Slightly increased padding */
+    border-radius: 15px; /* Matched with navbar/container style */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Matched with navbar style */
+    max-width: 800px;
+    margin: 30px auto; /* Increased margin */
+}
+
+/* Profile Header */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* Slightly increased margin */
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #db9761; /* Main accent color */
+    margin-right: 25px; /* Slightly increased margin */
+    transition: transform 0.3s ease;
+}
+
+.profile-avatar img:hover {
+    transform: scale(1.05); /* Hover effect */
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 26px; /* Slightly increased font size */
+    font-weight: 600; /* Adjusted font weight */
+    margin: 0;
+    color: #333;
+}
+
+.profile-email {
+    font-size: 15px; /* Slightly increased font size */
+    color: #555;
+    margin: 5px 0 15px; /* Adjusted margin */
+}
+
+.edit-profile-btn {
+    background-color: #db9761; /* Main accent color */
+    color: #fff;
+    border: none;
+    padding: 10px 18px; /* Adjusted padding */
+    border-radius: 8px; /* Matched with site buttons */
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Matched transitions */
+}
+
+.edit-profile-btn:hover {
+    background-color: #cf8d58; /* Darker accent on hover */
+    transform: scale(1.05); /* Hover effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hover effect */
+}
+
+/* Profile Tabs */
+.profile-tabs {
+    display: flex;
+    justify-content: space-around; /* Adjusted for better spacing */
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e9ecef; /* Lighter border color */
+}
+
+.tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0; /* Adjusted padding */
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500; /* Adjusted font weight */
+    color: #555; /* Default color for inactive tabs */
+    cursor: pointer;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease, transform 0.2s ease;
+    border-bottom: 3px solid transparent; /* For smooth transition */
+}
+
+.tab-btn.active {
+    color: #db9761; /* Main accent color */
+    border-bottom: 3px solid #db9761;
+    font-weight: 600;
+}
+
+.tab-btn:not(.active):hover {
+    color: #cf8d58; /* Darker accent on hover for inactive tabs */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Profile Content */
+.profile-content {
+    padding: 25px;
+    background-color: #fff; /* Kept white for contrast within the section */
+    border-radius: 10px; /* Slightly smaller radius for nested content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Softer shadow */
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out; /* Fade in animation for tabs */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content h2 {
+    font-size: 22px; /* Adjusted heading size */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* Overview Tab */
+.overview-stats {
+    display: flex;
+    justify-content: space-around; /* Changed to space-around */
+    gap: 20px; /* Added gap for better spacing */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.stat-item {
+    text-align: center;
+    flex-basis: calc(33.333% - 20px); /* Adjust basis for gap */
+    min-width: 150px; /* Minimum width for items */
+    margin: 0; /* Removed individual margin */
+    padding: 20px; /* Increased padding */
+    background-color: #f8f9fa; /* Consistent light background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Light shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item h3 {
+    font-size: 28px; /* Larger stat number */
+    color: #db9761; /* Main accent color */
+    margin: 0 0 5px;
+    font-weight: 700;
+}
+
+.stat-item p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+/* Orders Tab */
+.order-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Gap between order items */
+}
+
+.order-item {
+    padding: 20px; /* Increased padding */
+    border: 1px solid #e9ecef; /* Lighter border */
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Consistent light background */
+    transition: box-shadow 0.2s ease;
+}
+
+.order-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow on hover */
+}
+
+.order-item p {
+    margin: 8px 0; /* Adjusted margin */
+    font-size: 15px;
+}
+
+.order-item p strong {
+    color: #333;
+}
+
+.status {
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.status.delivered {
+    color: #28a745; /* Green for delivered */
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.status.pending {
+    color: #ffc107; /* Yellow/Orange for pending */
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.view-order-btn {
+    background-color: #db9761; /* Main accent color */
+    color: #fff;
+    border: none;
+    padding: 8px 15px; /* Adjusted padding */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px; /* Added margin top */
+}
+
+.view-order-btn:hover {
+    background-color: #cf8d58; /* Darker accent on hover */
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Wishlist Tab */
+.wishlist-items {
+    display: grid; /* Using grid for better layout control */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.wishlist-item {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 15px; /* Adjusted padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* width: calc(50% - 10px); Removed fixed width for grid */
+}
+
+.wishlist-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-item img {
+    width: 70px; /* Slightly larger image */
+    height: 100px; /* Adjusted height */
+    object-fit: cover; /* Ensure image covers the area */
+    margin-right: 15px;
+    border-radius: 5px;
+    border: 1px solid #e9ecef; /* Light border for image */
+}
+
+.wishlist-info {
+    flex: 1; /* Allow info to take remaining space */
+}
+
+.wishlist-info h3 {
+    margin: 0 0 5px; /* Adjusted margin */
+    font-size: 17px; /* Adjusted font size */
+    font-weight: 600;
+    color: #333;
+}
+
+.wishlist-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 3px 0;
+}
+
+.remove-wishlist-btn {
+    background-color: #dc3545; /* Standard danger color */
+    color: #fff;
+    border: none;
+    padding: 8px 12px; /* Adjusted padding */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px; /* Added margin for spacing */
+}
+
+.remove-wishlist-btn:hover {
+    background-color: #c82333; /* Darker danger color on hover */
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Settings Tab */
+.settings-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Increased margin */
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600; /* Bolder label */
+    margin-bottom: 8px; /* Increased margin */
+    font-size: 15px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px 15px; /* Increased padding */
+    border: 1px solid #ddd; /* Matched with general input style */
+    border-radius: 8px; /* Matched border radius */
+    font-size: 15px;
+    box-sizing: border-box; /* Important for width 100% and padding */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #db9761; /* Main accent color on focus */
+    box-shadow: 0 0 0 0.2rem rgba(219, 151, 97, 0.25); /* Focus shadow */
+    outline: none;
+}
+
+.save-settings-btn {
+    background-color: #db9761; /* Main accent color */
+    color: #fff;
+    border: none;
+    padding: 12px 20px; /* Adjusted padding for a primary button */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px; /* Slightly larger font for save button */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.save-settings-btn:hover {
+    background-color: #cf8d58; /* Darker accent on hover */
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments (Example - can be expanded) */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-avatar img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .profile-info {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-tabs {
+        font-size: 14px; /* Smaller tabs on mobile */
+    }
+
+    .tab-btn {
+        font-size: 14px;
+        padding: 10px 5px; /* Adjust padding */
+    }
+
+    .overview-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-item {
+        flex-basis: 100%; /* Full width on small screens */
+    }
+
+    .wishlist-items {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
+
+    .wishlist-item {
+        flex-direction: column; /* Stack image and info vertically */
+        align-items: flex-start;
+    }
+
+    .wishlist-item img {
+        margin-bottom: 10px;
+        width: 100%; /* Full width image */
+        height: auto; /* Maintain aspect ratio */
+        max-width: 150px; /* Limit max width */
+        align-self: center;
+    }
+
+    .remove-wishlist-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .profile-name {
+        font-size: 22px;
+    }
+
+    .profile-email {
+        font-size: 13px;
+    }
+
+    .edit-profile-btn,
+    .view-order-btn,
+    .save-settings-btn {
+        padding: 10px 15px;
+        font-size: 15px;
+    }
+
+    .tab-btn {
+        font-size: 13px;
+    }
+
+    .tab-content h2 {
+        font-size: 20px;
+    }
+
+    .stat-item h3 {
+        font-size: 24px;
+    }
+
+    .wishlist-info h3 {
+        font-size: 16px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
+

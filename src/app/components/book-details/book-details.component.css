@@ -1,0 +1,270 @@
+/* filepath: c:\Users\havrk\my\uni\4_term\newKursova\Frontend\BookstoreFrontend\src\app\components\book-details\book-details.component.css */
+:host {
+    display: block;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.book-details-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.book-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-details-cover {
+  width: 200px; /* Фіксована ширина */
+  height: 300px; /* Фіксована висота */
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.book-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.book-author {
+    font-size: 20px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.book-genre,
+.book-publisher,
+.book-isbn,
+.book-price {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.book-description {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.book-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.book-actions .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.book-actions .btn-primary {
+    background-color: #db9761;
+    color: #fff;
+    border: none;
+}
+
+.book-actions .btn-primary:hover {
+    background-color: #c86f3f;
+    transform: translateY(-2px);
+}
+
+.book-actions .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.book-actions .btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.book-actions .btn-outline-secondary {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.book-actions .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.book-actions .btn-edit {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.book-actions .btn-edit:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.book-actions .btn-edit i {
+    font-size: 14px;
+}
+
+/* src/app/components/book-details/book-details.component.css */
+/* ... (твої існуючі стилі для деталей книги) ... */
+
+.reviews-section {
+  margin-top: 40px; /* Відступ від основного контенту книги */
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+.reviews-section h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.review-info-message {
+  font-size: 15px;
+}
+
+/* Форма для відгуку */
+.review-form-container {
+  background-color: #fcfdff; /* Дуже світлий фон для форми */
+  border: 1px solid #eef2f7;
+  padding: 25px; /* Збільшив відступи */
+}
+.review-form-container .card-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form-group label { /* Це загальний клас, тому може вплинути на інші форми, якщо стилі не ізольовані */
+  font-weight: 500;
+  color: #454545;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.form-label .required-asterisk { color: #dc3545; margin-left: 2px; }
+
+
+/* Стилі для зірочок рейтингу */
+.star-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Відступ, якщо є повідомлення про помилку під зірочками */
+}
+.star-btn {
+  background: none;
+  border: none;
+  padding: 2px; /* Невеликий відступ навколо зірки */
+  cursor: pointer;
+  color: #e0e0e0; /* Колір неактивної зірки */
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+.star-btn svg {
+  width: 26px; /* Розмір зірочок */
+  height: 26px;
+}
+.star-btn:hover,
+.star-btn.selected {
+  color: #ffc107; /* Колір активної/наведеної зірки (Bootstrap жовтий) */
+}
+.star-btn:hover {
+    transform: scale(1.15);
+}
+.star-btn.is-invalid svg { /* Якщо поле рейтингу невалідний, можна підсвітити зірки */
+    /* Наприклад, додати червону обводку, але це може бути занадто
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.5); */
+}
+/* Для d-block на invalid-feedback */
+.invalid-feedback.d-block { display: block !important; }
+
+
+textarea.form-control {
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+.review-form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end; /* Кнопки праворуч */
+}
+.submit-review-btn { /* Специфічний клас для кнопки відправки відгуку */
+    background-color: #db9761; /* Твій акцентний колір */
+    border-color: #db9761;
+}
+.submit-review-btn:hover {
+    background-color: #cf8d58;
+    border-color: #cf8d58;
+}
+
+
+/* Список існуючих відгуків */
+.reviews-list {
+  margin-top: 30px;
+}
+.review-item.card {
+  border-color: #eef2f7; /* Світліша рамка для відгуків */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+.review-item .card-body {
+  padding: 15px 20px; /* Трохи менші відступи для компактності */
+}
+.review-author-rating {
+  display: flex;
+  align-items: center;
+}
+.review-username {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+.review-stars svg { /* Зірки для відображення рейтингу */
+  margin-bottom: 2px; /* Маленький відступ, щоб були на одній лінії з текстом */
+}
+.review-comment {
+  font-size: 15px;
+  color: #454545;
+  line-height: 1.6;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  white-space: pre-wrap; /* Зберігає переноси рядків у відгуку */
+}
+.review-date {
+  font-size: 13px;
+}
+
+/* Завантаження та порожні стани (якщо ти використовуєш ці класи) */
+.loading-overlay { /* Стилі з попередніх прикладів */
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; min-height: 150px; padding: 20px;
+}
+.loading-dots { /* ... */ } .loading-dots div { /* ... */ } .loading-text { /* ... */ }
+@keyframes pulse { /* ... */ }
+
+.no-reviews-message {
+  font-size: 16px;
+  color: #6c757d;
+  padding: 20px;
+  text-align: center;
+}
