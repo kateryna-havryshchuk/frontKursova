@@ -58,7 +58,7 @@ export class BookComponent implements OnInit {
   // Метод для переходу на деталі книги (якщо картка клікабельна)
   viewBookDetails(bookId: number | undefined): void {
     if (bookId) {
-      this.router.navigate(['book/:id']); // Перенаправляємо на сторінку деталей книги
+      this.router.navigate([`/book/${bookId}`]); // Переконайся, що тут bookId правильний
     }
   }
 

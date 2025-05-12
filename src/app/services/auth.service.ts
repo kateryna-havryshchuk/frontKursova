@@ -140,7 +140,7 @@ export class AuthService {
       id: response.userId,
       username: response.username,
       email: response.email,
-      role: response.role || 'USER' // Set default role if not provided
+      role: response.role || 'ADMIN' // Set default role if not provided
     });
     (this.isAuthenticated$ as BehaviorSubject<boolean>).next(true);
   }

@@ -194,8 +194,11 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEditBook(): void {
-    if (this.book) {
-        this.router.navigate(['/books/edit', this.book.id]);
+    console.log('Book object:', this.book); // Debug log to check the book object
+    if (this.book && this.book.id) {
+        this.router.navigate([`/books/edit/${this.book.id}`]);
+    } else {
+        console.warn('Book or Book ID is not available.'); // Debugging message
     }
   }
 
